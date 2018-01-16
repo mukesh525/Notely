@@ -50,17 +50,18 @@ export class App extends Component {
 
   closeDrawer = () => {
     this._drawer.close();
-    this.toggle();
   };
+
   openDrawer = () => {
     this._drawer.open();
-    this.toggle();
   };
 
   toggle = () => {
     this.setState({
       isOpen: !this.state.isOpen
     });
+
+    console.log(this.state.isOpen);
   };
 
   updateMenuState(isOpen) {
@@ -107,6 +108,9 @@ export class App extends Component {
     // console.log(newProps);
 
     if (nextProps.data.type == "view" || nextProps.data.type == "new") {
+      this.setState({
+        isOpen: false
+      });
       Actions.edit();
     }
 

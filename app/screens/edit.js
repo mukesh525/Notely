@@ -60,8 +60,7 @@ export class Edit extends Component<{}> {
         type: nextProps.data.type,
         position: 0,
         titleText: "",
-        descText: "",
-        key: nextProps.data.length
+        descText: ""
       });
     }
 
@@ -88,13 +87,18 @@ export class Edit extends Component<{}> {
   };
 
   saveData = type => {
+    var Newkey = this.state.data.length * Math.floor(Math.random() * 100 + 1);
+    var oldKey = this.state.data[this.state.position].key;
+
     var newdata = {
       name: this.state.titleText,
       desc: this.state.descText,
       isStar: false,
       isHeart: false,
-      time: new Date()
+      time: new Date(),
+      key: type == "new" ? Newkey : oldKey
     };
+
     this.props.saveData(this.state.data, type, this.state.position, newdata);
     if (type == "new") {
       Actions.pop();

@@ -56,6 +56,9 @@ export function filterData(data, condition) {
 }
 
 export function deleteRow(rowMap, data, rowKey) {
+  console.log("delete");
+  console.log(data);
+  console.log(rowKey);
   return dispatch => {
     const newData = data;
     for (var i = 0; i < data.length; i++) {
