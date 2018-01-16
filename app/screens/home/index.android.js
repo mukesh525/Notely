@@ -23,7 +23,6 @@ import SplashScreen from "react-native-smart-splash-screen";
 
 import { SwipeListView, SwipeRow } from "react-native-swipe-list-view";
 import SideMenu from "react-native-side-menu";
-import Menu from "../menu";
 
 import Icon1 from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -129,21 +128,21 @@ export class App extends Component {
       this.setState({
         listViewData: nextProps.data.isfilter
           ? nextProps.data.filter
-          : nextProps.data.data
+          : nextProps.data.data,
+        isOpen: false
       });
     }
   }
 
   deleteRow(rowMap, rowKey) {
     this.closeRow(rowMap, rowKey);
-
-    this.props.deleteRow(rowMap, this.state.listViewData, rowKey);
-    //this.setState({ listViewData: newData });
+    this.props.deleteRow(rowMap, this.props.data.data, rowKey);
+    this.setState({ isOpen: false });
   }
 
   setStar(rowMap, rowKey) {
     this.closeRow(rowMap, rowKey);
-    this.props.updateStar(rowMap, this.state.listViewData, rowKey);
+    this.props.updateStar(rowMap, this.props.data.data, rowKey);
   }
 
   saveData(array) {
@@ -162,7 +161,7 @@ export class App extends Component {
 
   setHeart(rowMap, rowKey) {
     this.closeRow(rowMap, rowKey);
-    this.props.updateHeart(rowMap, this.state.listViewData, rowKey);
+    this.props.updateHeart(rowMap, this.props.data.data, rowKey);
   }
 
   onRowDidOpen = (rowKey, rowMap) => {
