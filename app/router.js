@@ -1,0 +1,42 @@
+import React, { Component } from "react";
+import { View, Text } from "react-native";
+import EStyleSheet from "react-native-extended-stylesheet";
+import { Scene, Router } from "react-native-router-flux";
+
+import Home from "./screens/home";
+import ViewNote from "./screens/viewNote";
+import Edit from "./screens/edit";
+
+export default class Navigation extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <Router>
+        <Scene key="root">
+          <Scene
+            key="home"
+            component={Home}
+            initial={false}
+            hideNavBar={true}
+          />
+
+          <Scene
+            key="view"
+            component={ViewNote}
+            initial={false}
+            hideNavBar={true}
+          />
+          <Scene
+            key="edit"
+            component={Edit}
+            initial={false}
+            hideNavBar={true}
+          />
+        </Scene>
+      </Router>
+    );
+  }
+}
