@@ -76,6 +76,17 @@ export class Edit extends Component<{}> {
     }
   }
 
+  undo = () => {
+    if (this.props.data.type == "new") {
+      this.setState({ titleText: "", descText: "" });
+    } else {
+      this.setState({
+        titleText: this.state.obj.name,
+        descText: this.state.obj.desc
+      });
+    }
+  };
+
   saveData = type => {
     var newdata = {
       name: this.state.titleText,
@@ -141,7 +152,7 @@ export class Edit extends Component<{}> {
                 alignItems: "flex-start",
                 marginLeft: 7
               }}
-              onPress={_ => Actions.home()}
+              onPress={_ => this.undo()}
             >
               <Text
                 style={{
