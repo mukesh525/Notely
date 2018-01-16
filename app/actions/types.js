@@ -17,3 +17,5 @@ export const CREATE_ERROR = "CREATE_ERROR";
 export const DELETE_REQUEST = "DELETE_REQUEST";
 export const DELETE_SUCESS = "DELETE_SUCESS";
 export const DELETE_ERROR = "DELETE_ERROR";
+
+export const FILTER_REQUEST = "FILTER_REQUEST";

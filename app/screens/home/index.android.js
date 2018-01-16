@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   StatusBar,
+  ToastAndroid,
   View
 } from "react-native";
 import { connect } from "react-redux";
@@ -29,6 +30,8 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import Icon2 from "react-native-vector-icons/FontAwesome";
 import ActionButton from "react-native-action-button";
 import Icon3 from "react-native-vector-icons/Ionicons";
+import Drawer from "react-native-drawer";
+import ControlPanel from "../controlPanel";
 
 import { Items } from "../data.js";
 
@@ -44,6 +47,15 @@ export class App extends Component {
       selectedItem1: "About"
     };
   }
+
+  closeDrawer = () => {
+    this._drawer.close();
+    this.toggle();
+  };
+  openDrawer = () => {
+    this._drawer.open();
+    this.toggle();
+  };
 
   toggle = () => {
     this.setState({
@@ -79,8 +91,8 @@ export class App extends Component {
   componentDidMount() {
     SplashScreen.close({
       animationType: SplashScreen.animationType.scale,
-      duration: 850,
-      delay: 500
+      duration: 350,
+      delay: 200
     });
   }
 
@@ -98,8 +110,23 @@ export class App extends Component {
       Actions.edit();
     }
 
-    if (nextProps.data) {
-      this.setState({ listViewData: nextProps.data.data });
+    // ToastAndroid.show("location Update", ToastAndroid.SHORT);
+
+    if (
+      nextProps.data &&
+      nextProps.data.isfilter &&
+      nextProps.data.filter.length == 0
+    ) {
+      ToastAndroid.show("No  Records found", ToastAndroid.SHORT);
+      this.setState({
+        listViewData: nextProps.data.data
+      });
+    } else if (nextProps.data) {
+      this.setState({
+        listViewData: nextProps.data.isfilter
+          ? nextProps.data.filter
+          : nextProps.data.data
+      });
     }
   }
 
@@ -147,17 +174,18 @@ export class App extends Component {
   };
 
   render() {
-    const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
+    // const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
 
     return (
-      <SideMenu
-        openMenuOffset={180}
-        menu={menu}
-        disableGestures={true}
-        menuPosition="right"
-        isOpen={this.state.isOpen}
-        edgeHitWidth={30}
-        onChange={isOpen => this.updateMenuState(isOpen)}
+      <Drawer
+        ref={ref => (this._drawer = ref)}
+        tapToClose={true}
+        openDrawerOffset={0.4} // 20% gap on the right side of drawer
+        panCloseMask={0.2}
+        closedDrawerOffset={-4}
+        side="right"
+        content={<ControlPanel closeDrawer={this.closeDrawer} />}
+        open={this.state.isOpen}
       >
         <StatusBar backgroundColor="#CCC" barStyle="light-content" />
         <View style={styles.container}>
@@ -321,7 +349,7 @@ export class App extends Component {
           buttonColor="rgba(231,76,60,1)"
           onPress={() => this.props.createNew()}
         />
-      </SideMenu>
+      </Drawer>
     );
   }
 }

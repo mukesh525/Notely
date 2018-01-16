@@ -3,24 +3,23 @@ const initialState = {
   data: [],
   position: 0,
   type: "",
-  fetching: false,
-  fetched: false,
-  error: null
+  isfilter: false,
+  filter: []
 };
 
 export function data(state = initialState, action) {
   data;
   switch (action.type) {
     case types.GET_REQUEST:
-      return { ...state, fetching: true };
+      return { ...state };
       break;
 
     case types.GET_SUCESS:
       return {
         ...state,
-        fetching: false,
-        fetched: true,
         type: "",
+        isfilter: false,
+        filter: [],
         data: Object.assign([], state.data, action.data)
       };
       break;
@@ -28,9 +27,9 @@ export function data(state = initialState, action) {
     case types.GET_INITIAL:
       return {
         ...state,
-        fetching: false,
-        fetched: true,
         type: "",
+        isfilter: false,
+        filter: [],
         data: Object.assign(
           [],
           state.data,
@@ -42,9 +41,9 @@ export function data(state = initialState, action) {
     case types.UPDATE_REQUEST:
       return {
         ...state,
-        fetching: false,
-        fetched: false,
         type: "view",
+        isfilter: false,
+        filter: [],
         position: action.position
       };
       break;
@@ -52,9 +51,9 @@ export function data(state = initialState, action) {
     case types.UPDATE_SUCESS:
       return {
         ...state,
-        fetching: false,
-        fetched: false,
         type: "",
+        isfilter: false,
+        filter: [],
         position: action.position
       };
       break;
@@ -62,9 +61,18 @@ export function data(state = initialState, action) {
     case types.CREATE_REQUEST:
       return {
         ...state,
-        fetching: false,
-        fetched: false,
-        type: "new"
+        type: "new",
+        isfilter: false,
+        filter: []
+      };
+      break;
+
+    case types.FILTER_REQUEST:
+      return {
+        ...state,
+        type: "",
+        isfilter: true,
+        filter: action.filter
       };
       break;
   }

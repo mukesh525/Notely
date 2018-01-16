@@ -23,7 +23,37 @@ export function getUpdatedData() {
   };
 }
 
-export function filterData(data, condition) {}
+export function filterData(data, condition) {
+  console.log(condition);
+  return dispatch => {
+    const newData = data;
+    const filterData = [];
+
+    if (condition.isHeart && !condition.isStar) {
+      for (var i = 0; i < newData.length; i++) {
+        if (newData[i].isHeart) {
+          filterData.push(newData[i]);
+        }
+      }
+    } else if (condition.isStar && !condition.isHeart) {
+      for (var i = 0; i < newData.length; i++) {
+        if (newData[i].isStar) {
+          filterData.push(newData[i]);
+        }
+      }
+    } else if (condition.isStar && condition.isHeart) {
+      for (var i = 0; i < newData.length; i++) {
+        if (newData[i].isStar && newData[i].isHeart) {
+          filterData.push(newData[i]);
+        }
+      }
+    }
+    dispatch({
+      type: types.FILTER_REQUEST,
+      filter: filterData
+    });
+  };
+}
 
 export function deleteRow(rowMap, data, rowKey) {
   return dispatch => {
