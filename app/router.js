@@ -4,7 +4,6 @@ import EStyleSheet from "react-native-extended-stylesheet";
 import { Scene, Router } from "react-native-router-flux";
 
 import Home from "./screens/home";
-import ViewNote from "./screens/viewNote";
 import Edit from "./screens/edit";
 
 export default class Navigation extends Component {
@@ -23,12 +22,6 @@ export default class Navigation extends Component {
             hideNavBar={true}
           />
 
-          <Scene
-            key="view"
-            component={ViewNote}
-            initial={false}
-            hideNavBar={true}
-          />
           <Scene
             key="edit"
             component={Edit}
