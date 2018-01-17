@@ -8,6 +8,8 @@ import thunkMiddleware from "redux-thunk";
 import { createLogger } from "redux-logger";
 import configureStore from "@lib/configureStore";
 
+
+
 let store = configureStore();
 
 export default class Index extends Component {
